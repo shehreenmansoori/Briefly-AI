@@ -2,7 +2,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.35%2B-FF4B4B.svg)](https://streamlit.io/)
-[![Groq LPU](https://img.shields.io/badge/Groq-Whisper%20%26%20Llama%203.3-F55036.svg)](https://groq.com/)
+[![Groq LPU](https://img.shields.io/badge/Groq-Whisper%20%26%20GPT--OSS%20120B-F55036.svg)](https://groq.com/)
 [![Mistral AI](https://img.shields.io/badge/Mistral-Embeddings-orange.svg)](https://mistral.ai/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](https://www.docker.com/)
 
@@ -13,8 +13,9 @@
 ## Key Highlights
 
 - **0 MB Container RAM Audio Transcription:** Offloads Whisper inference to **Groq Cloud Whisper API** (`whisper-large-v3-turbo`) for ~3-second transcriptions without loading heavy PyTorch wheels.
+- **Pure File Upload Architecture:** Secure direct upload for audio and video files (MP3, WAV, M4A, MP4, WEBM, OGG, AAC) with zero dependency on fragile web scrapers.
 - **Multilingual Support:** Handles English via Groq Whisper and Hinglish audio translation via **Sarvam AI**.
-- **Real-Time Token Streaming:** Delivers meeting Q&A at 300+ tokens/second powered by **Groq Llama 3.3 70B Versatile**.
+- **Real-Time Token Streaming:** Delivers meeting Q&A at 300+ tokens/second powered by **Groq LPU (GPT-OSS 120B)** with graceful fallback to Mistral.
 - **Ephemeral Session Vector Store:** Uses **Mistral API Embeddings** (`mistral-embed`) with LangChain's `InMemoryVectorStore` to ensure strict tenant isolation with zero cross-user collisions or disk leaks.
 - **1-Click Recruiter Demo:** Bundled with a sample meeting recording for instant one-click testing without file uploads.
 - **Automatic Ephemeral Cleanup:** Audio files and temporary chunk slices are purged immediately after processing to maintain a clean filesystem.
@@ -24,32 +25,32 @@
 ## Architecture
 
 ```
-[Meeting Audio / Video / Sample]
-              │
-              ▼
-[Audio Processor (16kHz Mono)] ──► [5-Min Chunking Engine]
-                                                │
-                                                ▼
-                               [Groq Cloud Whisper / Sarvam]
-                                                │
-                                                ▼
-                                     [Unified Transcript]
-                                                │
-                 ┌──────────────────────────────┴──────────────────────────────┐
-                 ▼                                                             ▼
-   [Executive Intelligence (Groq 70B)]                          [Dense Semantic Indexing]
-   • Title Generation                                            • Mistral Embeddings
-   • Topic-Grouped Summary                                       • InMemoryVectorStore (Ephemeral)
-   • Action Items (Owner + Deadline)                                           │
-   • Key Decisions & Open Questions                                            ▼
-                 │                                              [Conversational RAG Engine]
-                 │                                              • Multi-turn Pronoun Resolution
-                 │                                              • Context Retrieval
-                 └──────────────────────────────┬──────────────────────────────┘
-                                                ▼
-                                 [Streamlit Responsive UI]
-                                 • 5 Categorized Tabs
-                                 • Live Token Streaming Chat
+[Uploaded Audio/Video or 1-Click Sample]
+                   │
+                   ▼
+     [Audio Processor (16kHz Mono)] ──► [5-Min Chunking Engine]
+                                                     │
+                                                     ▼
+                                    [Groq Cloud Whisper / Sarvam]
+                                                     │
+                                                     ▼
+                                          [Unified Transcript]
+                                                     │
+                      ┌──────────────────────────────┴──────────────────────────────┐
+                      ▼                                                             ▼
+        [Executive Intelligence (Groq 120B)]                         [Dense Semantic Indexing]
+        • Title Generation                                           • Mistral Embeddings
+        • Topic-Grouped Summary                                      • InMemoryVectorStore (Ephemeral)
+        • Action Items (Owner + Deadline)                                           │
+        • Key Decisions & Open Questions                                            ▼
+                      │                                              [Conversational RAG Engine]
+                      │                                              • Multi-turn Pronoun Resolution
+                      │                                              • Context Retrieval
+                      └──────────────────────────────┬──────────────────────────────┘
+                                                     ▼
+                                      [Streamlit Responsive UI]
+                                      • 5 Categorized Tabs
+                                      • Live Token Streaming Chat
 ```
 
 ---
@@ -79,8 +80,9 @@ Edit `.env`:
 # Required for dense embeddings & fallback generation
 MISTRAL_API_KEY=your_mistral_api_key
 
-# Required for fast cloud Whisper & Llama 3.3 70B generation
+# Required for fast cloud Whisper & 120B generation
 GROQ_API_KEY=your_groq_api_key
+GROQ_CHAT_MODEL=openai/gpt-oss-120b
 
 # Optional: Required for Hinglish translation
 SARVAM_API_KEY=your_sarvam_api_key
@@ -122,9 +124,13 @@ This project includes a production `Dockerfile` with system `ffmpeg` pre-configu
 │   └── extractor.py         # Structured action items & key decision extractors
 ├── samples/
 │   └── generate_sample.py   # Bundled demo audio generator script
+├── tests/
+│   ├── test_llm.py             # Unit test verifying LLM model selection
+│   ├── test_audio_processor.py # Unit test verifying pure file upload
+│   └── test_app_ui.py          # Unit test verifying UI clean labels
 ├── app.py                   # Streamlit web application with live token streaming
 ├── main.py                  # CLI entry point
-├── requirements.txt         # Lightweight dependency manifest (zero-PyTorch)
+├── requirements.txt         # Lightweight dependency manifest (zero-PyTorch, zero-yt-dlp)
 ├── Dockerfile               # Optimized container build with system ffmpeg
 ├── .dockerignore
 ├── .gitignore
