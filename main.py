@@ -9,7 +9,7 @@ load_dotenv()
 
 
 def run_pipeline(source: str, language: str = "english") -> dict:
-    print("Starting AI video assistant...")
+    print("Starting Briefly AI...")
 
     chunks, temp_files = process_input(source)
     try:
@@ -37,7 +37,7 @@ def run_pipeline(source: str, language: str = "english") -> dict:
 
 
 if __name__ == "__main__":
-    source = input("Enter YouTube URL or local file path: ").strip()
+    source = input("Enter audio or video file path: ").strip()
     language = input("Language (english/hinglish): ").strip() or "english"
     result = run_pipeline(source, language)
 
