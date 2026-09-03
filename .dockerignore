@@ -1,0 +1,15 @@
+.git
+.gitignore
+.env
+downloads/
+qdrant_data/
+__pycache__/
+*.pyc
+*.wav
+*.mp3
+*.m4a
+!samples/
+!samples/**
+.venv/
+env/
+venv/
