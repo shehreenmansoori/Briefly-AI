@@ -1,4 +1,4 @@
-# 🎙️ AI Video & Meeting Assistant
+# AI Video & Meeting Assistant
 
 [![Python](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.35%2B-FF4B4B.svg)](https://streamlit.io/)
@@ -10,7 +10,7 @@
 
 ---
 
-## ⚡ Key Highlights
+## Key Highlights
 
 - **0 MB Container RAM Audio Transcription:** Offloads Whisper inference to **Groq Cloud Whisper API** (`whisper-large-v3-turbo`) for ~3-second transcriptions without loading heavy PyTorch wheels.
 - **Multilingual Support:** Handles English via Groq Whisper and Hinglish audio translation via **Sarvam AI**.
@@ -21,7 +21,7 @@
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 [Meeting Audio / Video / Sample]
@@ -54,7 +54,7 @@
 
 ---
 
-## 🚀 Quick Start (Local Setup)
+## Quick Start (Local Setup)
 
 ### 1. Clone the Repository
 ```bash
@@ -94,7 +94,7 @@ streamlit run app.py
 
 ---
 
-## 🐳 Deploying on Render (Free Tier: 512MB RAM)
+## Deploying on Render (Free Tier: 512MB RAM)
 
 This project includes a production `Dockerfile` with system `ffmpeg` pre-configured.
 
@@ -110,7 +110,7 @@ This project includes a production `Dockerfile` with system `ffmpeg` pre-configu
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 ├── core/
@@ -121,7 +121,7 @@ This project includes a production `Dockerfile` with system `ffmpeg` pre-configu
 │   ├── summarize.py         # Single-pass & map-reduce executive summarizer
 │   └── extractor.py         # Structured action items & key decision extractors
 ├── samples/
-│   └── sample_meeting.mp3   # Bundled meeting audio for 1-click recruiter demo
+│   └── generate_sample.py   # Bundled demo audio generator script
 ├── app.py                   # Streamlit web application with live token streaming
 ├── main.py                  # CLI entry point
 ├── requirements.txt         # Lightweight dependency manifest (zero-PyTorch)
@@ -133,7 +133,7 @@ This project includes a production `Dockerfile` with system `ffmpeg` pre-configu
 
 ---
 
-## 👩‍💻 Author
+## Author
 
 Developed by **Shehreen Mansoori**  
 *GenAI / ML Developer*
