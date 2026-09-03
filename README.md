@@ -99,22 +99,6 @@ streamlit run app.py
 
 ---
 
-## Deploying on Render (Free Tier: 512MB RAM)
-
-This project includes a production `Dockerfile` with system `ffmpeg` pre-configured.
-
-1. Create a new **Web Service** on [Render Dashboard](https://dashboard.render.com/).
-2. Connect this GitHub repository.
-3. Select **Docker** as the Runtime.
-4. Select the **Free** instance plan (512MB RAM).
-5. Add the Environment Variables:
-   - `MISTRAL_API_KEY`
-   - `GROQ_API_KEY`
-   - `SARVAM_API_KEY` (optional)
-6. Click **Deploy Web Service**. Build completes in under 3 minutes and runs stably under ~85MB RAM.
-
----
-
 ## Repository Structure
 
 ```
