@@ -63,25 +63,20 @@ st.caption("AI-Powered Meeting Intelligence, Executive Summaries & Conversationa
 with st.sidebar:
     st.header("Briefly AI")
 
-    # Condition 2: 1-Click Demo for Recruiters
     st.caption("Recruiter 1-Click Demo:")
     sample_clicked = st.button(
-        "⚡ Load Sample Meeting",
+        "Load Sample Meeting",
         use_container_width=True,
         help="Run instant demo with bundled sample audio without uploading",
     )
 
     st.markdown("---")
 
-    # Condition 1: File Upload System
     uploaded_file = st.file_uploader(
         "Upload Meeting Audio / Video",
         type=["mp3", "wav", "m4a", "mp4", "webm", "ogg", "aac"],
         help="Supports standard audio and video formats",
     )
-
-    with st.expander("Or enter YouTube URL"):
-        youtube_url = st.text_input("YouTube URL", placeholder="https://youtube.com/watch?v=...")
 
     language = st.radio("Language", ["english", "hinglish"], horizontal=True)
     run_clicked = st.button("Process", type="primary", use_container_width=True)
@@ -101,26 +96,20 @@ if sample_clicked:
             except Exception as e:
                 st.sidebar.error(f"Pipeline failed: {e}")
 
-# Process User Upload or YouTube URL
+# Process User Upload
 elif run_clicked:
-    target_source = None
-    is_sample_run = False
-
-    if uploaded_file is not None:
+    if uploaded_file is None:
+        st.sidebar.error("Please upload an audio/video file or click 'Load Sample Meeting'.")
+    else:
         os.makedirs("downloads", exist_ok=True)
         target_source = os.path.join("downloads", f"upload_{uploaded_file.name}")
         with open(target_source, "wb") as f:
             f.write(uploaded_file.getbuffer())
-    elif youtube_url and youtube_url.strip():
-        target_source = youtube_url.strip()
 
-    if not target_source:
-        st.sidebar.error("Please upload an audio/video file or click 'Load Sample Meeting'.")
-    else:
         with st.spinner("Processing meeting — this can take a moment..."):
             try:
                 st.session_state.result = run_pipeline(
-                    target_source, language=language, is_sample=is_sample_run
+                    target_source, language=language, is_sample=False
                 )
                 st.session_state.chat_history = []
             except Exception as e:
