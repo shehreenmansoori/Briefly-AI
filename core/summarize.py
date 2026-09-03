@@ -8,12 +8,13 @@ load_dotenv()
 
 
 def get_llm():
-    """Prefer Groq Llama-3.3-70b-versatile for fast summaries; fallback to Mistral if Groq key missing."""
+    """Return configured LLM: Groq (default: openai/gpt-oss-120b) or fallback to Mistral."""
     groq_key = os.getenv("GROQ_API_KEY")
     if groq_key:
         from langchain_groq import ChatGroq
+        model_name = os.getenv("GROQ_CHAT_MODEL", "openai/gpt-oss-120b")
         return ChatGroq(
-            model="llama-3.3-70b-versatile",
+            model=model_name,
             api_key=groq_key,
             temperature=0.3,
         )
