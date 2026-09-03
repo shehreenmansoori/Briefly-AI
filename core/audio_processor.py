@@ -1,5 +1,4 @@
 import os
-import yt_dlp
 from pydub import AudioSegment
 
 DOWNLOAD_DIR = "downloads"
@@ -20,38 +19,6 @@ def cleanup_audio_files(file_paths: list) -> None:
                 os.remove(path)
         except Exception as e:
             print(f"Warning: Failed to clean up {path}: {e}")
-
-
-def download_youtube_audio(url: str) -> str:
-    """Download audio from YouTube using video ID for safe, collision-free filename."""
-    output_template = os.path.join(DOWNLOAD_DIR, "%(id)s.%(ext)s")
-    ydl_opts = {
-        "format": "bestaudio/best",
-        "outtmpl": output_template,
-        "postprocessors": [
-            {
-                "key": "FFmpegExtractAudio",
-                "preferredcodec": "wav",
-            }
-        ],
-        "quiet": True,
-        "no_warnings": True,
-        "extractor_args": {
-            "youtube": {
-                "player_client": ["android", "web"],
-            }
-        },
-    }
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(url, download=True)
-        video_id = info.get("id")
-        filename = os.path.join(DOWNLOAD_DIR, f"{video_id}.wav")
-
-    if not os.path.exists(filename):
-        prepared = ydl.prepare_filename(info)
-        filename = os.path.splitext(prepared)[0] + ".wav"
-
-    return filename
 
 
 def convert_to_wav(input_path: str) -> str:
@@ -86,28 +53,27 @@ def chunk_audio(wav_path: str, chunk_minutes: int = 5) -> list:
 
 def process_input(source: str, is_persistent_sample: bool = False) -> tuple[list, list]:
     """
-    Process YouTube URL, uploaded audio/video, or sample file into 16kHz WAV chunks.
+    Process uploaded audio/video or sample file into 16kHz WAV chunks.
+    Rejects remote URLs (upload-only architecture).
     Returns: (chunks_list, all_created_temp_files_for_cleanup)
     """
     temp_files = []
     source_clean = source.strip()
 
     if source_clean.startswith("http://") or source_clean.startswith("https://"):
-        print("Detected YouTube URL. Downloading audio...")
-        wav_path = download_youtube_audio(source_clean)
-        temp_files.append(wav_path)
-    else:
-        normalized = os.path.abspath(source_clean)
-        if not os.path.exists(normalized) or not os.path.isfile(normalized):
-            raise ValueError(f"File not found: {source_clean}")
+        raise ValueError("URL downloads are disabled. Please upload an audio/video file directly.")
 
-        # If it's a temporary upload in downloads/, track for cleanup
-        if not is_persistent_sample and DOWNLOAD_DIR in normalized:
-            temp_files.append(normalized)
+    normalized = os.path.abspath(source_clean)
+    if not os.path.exists(normalized) or not os.path.isfile(normalized):
+        raise ValueError(f"File not found: {source_clean}")
 
-        print("Converting audio to 16kHz mono WAV...")
-        wav_path = convert_to_wav(normalized)
-        temp_files.append(wav_path)
+    # If it's a temporary upload in downloads/, track for cleanup
+    if not is_persistent_sample and DOWNLOAD_DIR in normalized:
+        temp_files.append(normalized)
+
+    print("Converting audio to 16kHz mono WAV...")
+    wav_path = convert_to_wav(normalized)
+    temp_files.append(wav_path)
 
     print("Chunking audio into 5-minute segments...")
     chunks = chunk_audio(wav_path, chunk_minutes=5)
