@@ -1,0 +1,28 @@
+# Secrets
+.env
+*.env
+
+# Downloads & Temp media
+downloads/
+qdrant_data/
+
+# Ignore root-level media but preserve bundled demo samples
+*.wav
+*.mp3
+*.m4a
+*.mp4
+!samples/
+!samples/**
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# Streamlit
+.streamlit/secrets.toml
