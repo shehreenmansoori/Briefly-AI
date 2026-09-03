@@ -1,4 +1,4 @@
-# AI Video & Meeting Assistant
+# Briefly AI — Meeting Intelligence & Conversational RAG
 
 [![Python](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.35%2B-FF4B4B.svg)](https://streamlit.io/)
@@ -6,7 +6,7 @@
 [![Mistral AI](https://img.shields.io/badge/Mistral-Embeddings-orange.svg)](https://mistral.ai/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](https://www.docker.com/)
 
-> A lightweight, production-grade AI Meeting Assistant that transforms audio/video recordings into structured executive summaries, actionable task matrices, and interactive, history-aware conversational RAG. Built with a zero-local-weight architecture optimized for low-memory cloud containers (e.g., Render Free Tier with 512MB RAM).
+> **Briefly AI** is a lightweight, production-grade AI Meeting Assistant that transforms audio/video recordings into structured executive summaries, actionable task matrices, and interactive, history-aware conversational RAG. Built with a zero-local-weight architecture optimized for low-memory cloud containers (e.g., Render Free Tier with 512MB RAM).
 
 ---
 
@@ -58,8 +58,8 @@
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/shehreenmansoori/ai-video-assistant.git
-cd ai-video-assistant
+git clone https://github.com/shehreenmansoori/Briefly-AI.git
+cd Briefly-AI
 ```
 
 ### 2. Create Virtual Environment & Install Dependencies

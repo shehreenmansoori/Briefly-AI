@@ -10,7 +10,7 @@ from core.rag_engine import build_rag_chain, stream_answer
 
 load_dotenv()
 
-st.set_page_config(page_title="AI Video Assistant", layout="wide")
+st.set_page_config(page_title="Briefly AI", layout="wide")
 
 SAMPLE_AUDIO_PATH = os.path.join("samples", "sample_meeting.mp3")
 
@@ -57,10 +57,11 @@ if "result" not in st.session_state:
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-st.title("AI Video Assistant")
+st.title("Briefly AI")
+st.caption("AI-Powered Meeting Intelligence, Executive Summaries & Conversational RAG")
 
 with st.sidebar:
-    st.header("New video")
+    st.header("Briefly AI")
 
     # Condition 2: 1-Click Demo for Recruiters
     st.caption("Recruiter 1-Click Demo:")
