@@ -1,14 +1,13 @@
-# ── AI Meeting Assistant ── requirements.txt ──────────────────────────────────
+# ── Briefly AI ── requirements.txt ───────────────────────────────────────────
 # Lightweight, Zero-PyTorch build optimized for Render 512MB RAM free tier
 
-# ── Audio / Video acquisition ─────────────────────────────────────────────────
-yt-dlp>=2024.4.9                  # Download audio from YouTube URLs
+# ── Audio manipulation ────────────────────────────────────────────────────────
 pydub>=0.25.1                     # Audio file manipulation / format conversion
 gTTS>=2.5.0                       # Demo sample generator (pure python, lightweight)
 
 # ── Fast Cloud Inference (Groq LPU: STT + LLM) ────────────────────────────────
 groq>=0.9.0                       # Cloud Whisper API (whisper-large-v3-turbo)
-langchain-groq>=0.1.0             # Llama-3.3-70b-versatile (Fast generation & streaming)
+langchain-groq>=0.1.0             # Fast generation & streaming (openai/gpt-oss-120b)
 
 # ── Cloud Embeddings (Mistral API) ────────────────────────────────────────────
 langchain-mistralai>=0.1.0        # mistral-embed embeddings
