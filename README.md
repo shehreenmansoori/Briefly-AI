@@ -1,11 +1,14 @@
 # Briefly AI — Meeting Intelligence & Conversational RAG
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Render-46E3B7?style=flat-square&logo=render&logoColor=black)](https://briefly-ai-myrf.onrender.com/)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.35%2B-FF4B4B.svg)](https://streamlit.io/)
 [![Groq LPU](https://img.shields.io/badge/Groq-Whisper%20%26%20GPT--OSS%20120B-F55036.svg)](https://groq.com/)
 [![Mistral AI](https://img.shields.io/badge/Mistral-Embeddings-orange.svg)](https://mistral.ai/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](https://www.docker.com/)
 
+> [**Live Demo: briefly-ai-myrf.onrender.com**](https://briefly-ai-myrf.onrender.com/)
+>
 > **Briefly AI** is a lightweight, production-grade AI Meeting Assistant that transforms audio/video recordings into structured executive summaries, actionable task matrices, and interactive, history-aware conversational RAG. Built with a zero-local-weight architecture optimized for low-memory cloud containers (e.g., Render Free Tier with 512MB RAM).
 
 ---
